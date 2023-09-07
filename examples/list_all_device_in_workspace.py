@@ -1,3 +1,5 @@
+import sys
+sys.path.append("..")
 from datacake_graphql_client import DatacakeGraphQlClient
 
 # Some examples

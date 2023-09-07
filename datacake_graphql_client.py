@@ -11,6 +11,21 @@ class DatacakeGraphQlClient:
         response = requests.post(self.url, headers=self.headers, json=data)
         return response.json()
     
+    def login(self, email, password):
+        query = """
+        mutation LogIn($email: String!, $password: String!) {
+            login(email: $email, password: $password) {
+                ok
+                token
+            }
+        }
+        """
+        variables = {
+            "email": email,
+            "password": password
+        }
+        return self.run(query, variables)
+    
     def add_devices_into_product(self, workspace, devices, plan_code, plan, product):
         query = """
         mutation ($input: CreateApiDevicesInputType!) {

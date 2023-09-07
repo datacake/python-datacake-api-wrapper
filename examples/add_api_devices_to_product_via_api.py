@@ -1,3 +1,5 @@
+import sys
+sys.path.append("..")
 from datacake_graphql_client import DatacakeGraphQlClient
 
 # Some examples
@@ -26,7 +28,7 @@ if __name__ == '__main__':
     # This command requires:
     # - Product UUID
     # You can use the previous query to retrieve the product UUID
-    r = datacake_graphql_client.add_device_into_product(
+    r = datacake_graphql_client.add_devices_into_product(
         workspace="23ca644f-1ce1-dead-beef-dc6c9915f964", 
         plan="put-your-plan-here", # Put "free", "light", "standard", "plus" if you have no custom plan 
         plan_code="CODE IF YOU HAVE SOME", # Put a code if you have one (enterprise customer, promo, etc.)
