@@ -8,7 +8,7 @@ from datacake_graphql_client import DatacakeGraphQlClient
 if __name__ == '__main__':
 
     DATACAKE_GRAPHQL_API = "https://api.datacake.co/graphql/"
-    DATACAKE_TOKEN = "putyourdatacaketokenhere"
+    DATACAKE_TOKEN = "yourdatacaketoken"
 
     datacake_graphql_client = DatacakeGraphQlClient(
         url=DATACAKE_GRAPHQL_API,
@@ -30,14 +30,15 @@ if __name__ == '__main__':
     # - Product UUID
     # You can use the previous query to retrieve the product UUID
     r = datacake_graphql_client.add_lorawan_devices_into_product(
-        workspace="23ca644f-1ce1-dead-beef-dc6c9915f964", 
-        plan="put-your-plan-here", # Put "free", "light", "standard", "plus" if you have no custom plan 
-        plan_code="CODE IF YOU HAVE SOME", # Put a code if you have one (enterprise customer, promo, etc.)
-        product="5c2700ee-f046-4810-ac01-5d7aa70aff87", # the individual product id
+        workspace="f63af019-dead-beef-b1bc-35ff546fdead", 
+        plan="free", # Put "free", "light", "standard", "plus" if you have no custom plan 
+        plan_code="", # Put a code if you have one (enterprise customer, promo, etc.)
+        product="your-datacake-product-uuid", # the individual product id
+        network_server="TTI", # put "TTI" or "Loriot", etc...
         devices=[
         {
             "name":"My Device 01",
-            "devEui":"a72647f5900b1635",
+            "devEui":"a726dead900b1635",
             "location":"Somewhere in the Cloud",
             "tags":["a","b"],
             "claimCode":"abcdef123456",
@@ -48,7 +49,7 @@ if __name__ == '__main__':
         },
         {
             "name":"My Device 02",
-            "devEui":"a72647f5900b1634",
+            "devEui":"a72647dead0b1634",
             "location":"Somewhere in the Cloud",
             "tags":["a","b"],
             "claimCode":"abcdef123423",

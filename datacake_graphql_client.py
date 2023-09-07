@@ -47,7 +47,7 @@ class DatacakeGraphQlClient:
         }
         return self.run(query, variables)
     
-    def add_lorawan_devices_into_product(self, workspace, devices, plan_code, plan, product):
+    def add_lorawan_devices_into_product(self, workspace, devices, plan_code, plan, product, network_server):
         query = """
         mutation ($input: CreateLoraDevicesInputType!) {
           createLoraDevices(input: $input) {
@@ -64,6 +64,7 @@ class DatacakeGraphQlClient:
               "productKind":"EXISTING",
               "existingProduct":product,
               "devices": devices,
+              "networkServer":network_server
             }
         }
         return self.run(query, variables)
