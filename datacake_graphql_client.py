@@ -11,7 +11,7 @@ class DatacakeGraphQlClient:
         response = requests.post(self.url, headers=self.headers, json=data)
         return response.json()
     
-    def add_device_into_product(self, workspace, devices, plan_code, plan, product):
+    def add_devices_into_product(self, workspace, devices, plan_code, plan, product):
         query = """
         mutation ($input: CreateApiDevicesInputType!) {
           createApiDevices(input: $input) {
@@ -28,6 +28,27 @@ class DatacakeGraphQlClient:
               "devices": devices,
               "productKind":"EXISTING",
               "existingProduct":product
+            }
+        }
+        return self.run(query, variables)
+    
+    def add_lorawan_devices_into_product(self, workspace, devices, plan_code, plan, product):
+        query = """
+        mutation ($input: CreateLoraDevicesInputType!) {
+          createLoraDevices(input: $input) {
+            ok
+            error
+          }
+        }
+        """
+        variables = {
+            "input": {
+              "workspace":workspace,
+              "plan":plan,
+              "planCode":plan_code,
+              "productKind":"EXISTING",
+              "existingProduct":product,
+              "devices": devices,
             }
         }
         return self.run(query, variables)
