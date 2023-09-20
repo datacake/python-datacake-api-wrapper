@@ -26,6 +26,68 @@ class DatacakeGraphQlClient:
         }
         return self.run(query, variables)
     
+    def signup(self, firstName, lastName, email, password, companyName, confirmPassword, agreeToTerms, language, brand, captchaToken):
+        query = """
+        mutation Signup($email: String!, $password: String!, $firstName: String!, $lastName: String!, $brand: String, $companyName: String, $language: String, $captchaToken: String!) {
+            signup(
+                email: $email
+                password: $password
+                firstName: $firstName
+                lastName: $lastName
+                brand: $brand
+                firstWorkspaceName: $companyName
+                language: $language
+                captchaToken: $captchaToken
+            ) {
+                ok
+                token
+                __typename
+            }
+        }
+        """
+        variables = {
+            "firstName": firstName,
+            "lastName": lastName,
+            "email": email,
+            "password": password,
+            "companyName": companyName,
+            "language": language,
+            "brand": brand,
+            "captchaToken": captchaToken
+        }
+        
+        # Ensure confirmPassword and agreeToTerms are checked if necessary
+        if password != confirmPassword:
+            raise ValueError("Password and Confirm Password do not match")
+        if not agreeToTerms:
+            raise ValueError("You must agree to the terms to proceed")
+
+        return self.run(query, variables)
+
+    def add_particle_devices_into_product(self, workspace, devices, plan_code, plan, product, particleProduct, particleAccount):
+        query = """
+        mutation ($input: CreateParticleDevicesInputType!) {
+          createParticleDevices(input: $input) {
+            ok
+            error
+          }
+        }
+        """
+        variables = {
+            "input": {
+              "workspace":workspace,
+              "plan":plan,
+              "planCode":plan_code,
+              "devices": devices,
+              "product":"EXISTING",
+              "existingProduct": product,
+              "particleProduct": particleProduct,
+              "particleAccount": particleAccount,
+            }
+        }
+        return self.run(query, variables)
+
+    
     def add_devices_into_product(self, workspace, devices, plan_code, plan, product):
         query = """
         mutation ($input: CreateApiDevicesInputType!) {
