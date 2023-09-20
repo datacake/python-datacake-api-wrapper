@@ -30,8 +30,8 @@ if __name__ == '__main__':
         workspace="23ca644f-1ce1-dead-beef-dc6c9915f964", 
         plan="put-your-plan-here", # Put "free", "light", "standard", "plus" if you have no custom plan 
         plan_code="CODE IF YOU HAVE SOME", # Put a code if you have one (enterprise customer, promo, etc.)
-        product="5c2700ee-f046-4810-ac01-5d7aa70aff87", # the individual product id
-        particleProduct="",
+        datacakeProduct="5c34a1ef-6e2d-4d54-a0f8-0ab8bd568849", # the individual product id
+        particleProduct="20285", # AirWatch LTE America
         particleAccount="",
         devices=[
             {
@@ -45,3 +45,18 @@ if __name__ == '__main__':
         ]
     )
     print(r)
+
+    # Optional next Step - Enable Claiming
+
+    # r holds device information, such as:
+    # {'data': {'createParticleDevices': {'ok': True, 'error': None, 'devices': [{'id': 'f632f473-b4c9-40cd-b1cd-00f5d71e55fa'}]}}}
+    # now we can continue and iterate over created devices to enable claiming
+
+    for device in r['data']['createParticleDevices']['devices']:
+
+        r = datacake_graphql_client.set_claiming_on_device(
+            device=device['id'],
+            claiming=True
+        )
+
+        print(r)

@@ -64,12 +64,15 @@ class DatacakeGraphQlClient:
 
         return self.run(query, variables)
 
-    def add_particle_devices_into_product(self, workspace, devices, plan_code, plan, product, particleProduct, particleAccount):
+    def add_particle_devices_into_product(self, workspace, devices, plan_code, plan, datacakeProduct, particleProduct, particleAccount):
         query = """
         mutation ($input: CreateParticleDevicesInputType!) {
           createParticleDevices(input: $input) {
             ok
             error
+            devices {
+              id
+            }
           }
         }
         """
@@ -80,7 +83,7 @@ class DatacakeGraphQlClient:
               "planCode":plan_code,
               "devices": devices,
               "product":"EXISTING",
-              "existingProduct": product,
+              "existingProduct": datacakeProduct,
               "particleProduct": particleProduct,
               "particleAccount": particleAccount,
             }
